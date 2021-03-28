@@ -9,13 +9,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 project(${PROJECT_NAME})
 
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
 # include_directories(include)
 
-## Define libraries
-# target_include_directories(${PROJECT_NAME}_lib include)
-# add_library(${PROJECT_NAME}_lib
-# 
-#)
+## Define librariess
+add_library(${PROJECT_NAME}_lib
+  src/kalman_filters.cpp
+)
+target_include_directories(${PROJECT_NAME}_lib PUBLIC
+  include
+)
 
 ## Define the executable
 set(SRCS 
@@ -25,4 +30,4 @@ add_executable(${PROJECT_NAME} ${SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
  	include
 )
-# target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_lib)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_lib)
