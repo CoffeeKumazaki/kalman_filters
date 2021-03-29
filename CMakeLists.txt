@@ -17,6 +17,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 ## Define librariess
 add_library(${PROJECT_NAME}_lib
   src/kalman_filters.cpp
+  src/ekf.cpp
 )
 target_include_directories(${PROJECT_NAME}_lib PUBLIC
   include
