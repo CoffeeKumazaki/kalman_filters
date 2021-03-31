@@ -46,16 +46,9 @@ Eigen::VectorXd SystemModel::observation(const Eigen::VectorXd &u) {
   normal_random_variable un(Q);
   x_true = DynamicsModel(x_true, u) + un();
   
-  std::cout << "un: \n" << un() << std::endl;
-
   normal_random_variable zn(R);
   auto obs = ObservationModel(x_true);
 
-/*
-  std::cout << "obs: \n"
-            << obs << std::endl;
-  std::cout << "zn: \n" << zn() << std::endl;
-*/
   auto z = obs + zn();
 
   return z;

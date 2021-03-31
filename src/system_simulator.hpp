@@ -71,11 +71,13 @@ public:
     return jF;
   }
 
-  virtual Eigen::MatrixXd JacobObservationModel() {
+  virtual Eigen::MatrixXd JacobObservationModel(const Eigen::VectorXd &x) {
 
-    Eigen::MatrixXd jH(2, 4);
-    jH << 1.0, 0.0, 0.0, 0.0,
-          0.0, 1.0, 0.0, 0.0;
+    Eigen::MatrixXd jH(4, 2);
+    jH << 1.0, 0.0, 
+          0.0, 1.0,
+          0.0, 0.0, 
+          0.0, 0.0;
 
     return jH;
   }
@@ -84,19 +86,14 @@ public:
 class SystemSimulator {
 
 public:
-  SystemSimulator();
+  SystemSimulator(std::shared_ptr<SystemModel> model);
   ~SystemSimulator();
 
-  void init_model(
-    const Eigen::VectorXd& x0,
-    const Eigen::MatrixXd& _R, // Measurement noise covariance.
-    const Eigen::MatrixXd& _Q, // Process noise covariance.
-    double dt = 1.0/30.0
-  );
+  void init();
   void step(Eigen::VectorXd& u);
 
 private:
-  std::shared_ptr<SystemModelA> model;
+  std::shared_ptr<SystemModel> model;
 
 public:
   std::vector<Eigen::VectorXd> true_results;

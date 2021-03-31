@@ -1,7 +1,9 @@
 #include <stdafx.hpp>
 #include "system_simulator.hpp"
 
-SystemSimulator::SystemSimulator() {
+SystemSimulator::SystemSimulator(std::shared_ptr<SystemModel> _model)
+: model(_model)
+{
 
 }
 
@@ -9,17 +11,7 @@ SystemSimulator::~SystemSimulator() {
 
 }
 
-void SystemSimulator::init_model(
-  const Eigen::VectorXd& x0,
-  const Eigen::MatrixXd& _R, // Measurement noise covariance.
-  const Eigen::MatrixXd& _Q, // Process noise covariance.
-  double dt
-)
-{
-  if (model) {
-    model.reset();
-  }
-  model = std::make_shared<SystemModelA>(x0, _R, _Q, dt);
+void SystemSimulator::init() {
   true_results.clear();
   obs_results.clear();
 }

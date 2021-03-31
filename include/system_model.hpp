@@ -16,14 +16,14 @@ public:
   virtual Eigen::VectorXd DynamicsModel(const Eigen::VectorXd &x, const Eigen::VectorXd &u) = 0;
   virtual Eigen::VectorXd ObservationModel(const Eigen::VectorXd &x) = 0;
   virtual Eigen::MatrixXd JacobDynamicsModel(const Eigen::VectorXd &x, const Eigen::VectorXd &u) = 0;
-  virtual Eigen::MatrixXd JacobObservationModel() = 0;
+  virtual Eigen::MatrixXd JacobObservationModel(const Eigen::VectorXd &x) = 0;
 
   Eigen::VectorXd observation(const Eigen::VectorXd &u);
 
   Eigen::VectorXd getXtrue() { return x_true; }
 
-protected:
   Eigen::MatrixXd R, Q;
+protected:
   Eigen::VectorXd x_true;
   double dt;
 };
