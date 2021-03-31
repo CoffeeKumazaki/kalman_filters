@@ -11,13 +11,13 @@ int main(int argc, char const *argv[]) {
 	// state: x, y, yaw, v
 	Eigen::VectorXd x0(4);
 	// x0.setZero();
-	x0 << 0.0, 0.0, deg2rad(1.0), 1.0;
+	x0 << 0.0, 0.0, deg2rad(1.0), 10.0;
 
 	Eigen::MatrixXd Q(4, 4);
-	Q << 0.1, 0.0, 0.0, 0.0,
-			 0.0, 0.1, 0.0, 0.0,
-			 0.0, 0.0, 1.0, 0.0,
-			 0.0, 0.0, 0.0, deg2rad(1.0);
+	Q << 0.0, 0.0, 0.0, 0.0,
+			 0.0, 0.0, 0.0, 0.0,
+			 0.0, 0.0, deg2rad(0.1), 0.0,
+			 0.0, 0.0, 0.0, 0.01;
 
 	Q = Q * Q;
 
@@ -32,8 +32,8 @@ int main(int argc, char const *argv[]) {
 
 	// u: v, yaw
 	Eigen::VectorXd u(2);
-	u << 0.0, deg2rad(1.0);
-	while (t < 30.0) {
+	u << 0.0, deg2rad(2.0);
+	while (t < 60.0) {
 		sim.step(u);
 		t += dt;
 	}
