@@ -60,11 +60,11 @@ public:
 
   virtual Eigen::MatrixXd JacobDynamicsModel(const Eigen::VectorXd &x, const Eigen::VectorXd &u) {
     double yaw = x(2);
-    double v = u(0);
+    double v = x(3);
 
     Eigen::MatrixXd jF(4, 4);
-    jF << 1.0, 0.0, -dt*v*sin(yaw), dt*v*cos(yaw),
-          0.0, 1.0,  dt*v*cos(yaw), dt*v*sin(yaw),
+    jF << 1.0, 0.0, -dt*v*sin(yaw), dt*cos(yaw),
+          0.0, 1.0,  dt*v*cos(yaw), dt*sin(yaw),
           0.0, 0.0, 1.0, 0.0, 
           0.0, 0.0, 0.0, 1.0;
 
