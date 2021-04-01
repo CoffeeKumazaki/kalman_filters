@@ -18,3 +18,6 @@
 #include <math.h>
 #include <random>
 #include <memory>
+
+#define deg2rad(a) ((a)/180.0 * M_PI)
+#define rad2deg(a) ((a)*180.0 / M_PI)

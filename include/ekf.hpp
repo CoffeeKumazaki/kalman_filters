@@ -14,6 +14,7 @@ public:
   void predict(const Eigen::VectorXd& u);
   void update(const Eigen::VectorXd& y);
   Eigen::VectorXd get_state();
+  Eigen::MatrixXd get_cov();
 
 private:
   Eigen::MatrixXd P;

@@ -2,8 +2,7 @@
 #include <kalman_filters.hpp>
 #include <ekf.hpp>
 #include "system_simulator.hpp"
-
-#define deg2rad(a) ((a)/180.0 * M_PI)
+#include <plot_helper.hpp>
 
 int main(int argc, char const *argv[]) {
 
@@ -40,14 +39,18 @@ int main(int argc, char const *argv[]) {
 
 	// u: v, yaw
 	Eigen::VectorXd u(2);
-	u << 0.0, deg2rad(2.0);
+	u << 0.0, deg2rad(3.0);
 
 	std::vector<Eigen::VectorXd> res;
+	std::vector<Ellipse> es;
 	while (t < 60.0) {
 		sim.step(u);
 		ekf.predict(u);
 		ekf.update(sim.obs_results.back());
 		res.push_back(ekf.get_state());
+		Ellipse e;
+		get_covariance_ellipse(ekf.get_cov().block(0, 0, 2, 2), e);
+		es.push_back(e);
 		t += dt;
 	}
 
@@ -55,7 +58,8 @@ int main(int argc, char const *argv[]) {
 		std::cout << dt*i << ", " 
 							<< sim.true_results[i](0) << ", " << sim.true_results[i](1) << ", "
 							<< sim.obs_results[i](0) << ", " << sim.obs_results[i](1) << ", "
-							<< res[i](0) << ", " << res[i](1) << ", "
+							<< res[i](0) << ", " << res[i](1) << ", " 
+							<< es[i].major_ax << ", " << es[i].minor_ax << ", " << es[i].angle
 							<< std::endl;
 	}
 

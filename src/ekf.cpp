@@ -43,3 +43,7 @@ void ExtendedKF::update(const Eigen::VectorXd& y) {
 Eigen::VectorXd ExtendedKF::get_state() { 
   return x_hat; 
 }
+
+Eigen::MatrixXd ExtendedKF::get_cov() {
+  return P;
+}
