@@ -1,3 +1,7 @@
 # Kalman Filters
 
-## Kalman filter
+## Kalman Filter
+
+## Extended Kalman Filter (EKF)
+
+![gif](doc/ekf.gif)
