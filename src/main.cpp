@@ -9,7 +9,7 @@ int main(int argc, char const *argv[]) {
 	// state: x, y, yaw, v
 	Eigen::VectorXd x0(4);
 	// x0.setZero();
-	x0 << 0.0, 0.0, deg2rad(1.0), 10.0;
+	x0 << 0.0, 0.0, deg2rad(1.0), 1.0;
 
 	Eigen::MatrixXd Q(4, 4);
 	Q << 0.0, 0.0, 0.0, 0.0,
@@ -39,7 +39,7 @@ int main(int argc, char const *argv[]) {
 
 	// u: v, yaw
 	Eigen::VectorXd u(2);
-	u << 0.0, deg2rad(3.0);
+	u << 0.1, deg2rad(4.0);
 
 	std::vector<Eigen::VectorXd> res;
 	std::vector<Ellipse> es;

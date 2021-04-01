@@ -3,7 +3,7 @@ getValue(row,col,filename) = system('awk ''{if (NR == '.row.') print $'.col.'}''
 
 set terminal gif animate delay 5 optimize size 640,480 font "Courier, 12"
 set output 'ekf.gif'
-do for [i=1: 1800] {
+do for [i=1: 1700] {
   cx = getValue(i, 2, "../build/test.txt")
   cy = getValue(i, 3, "../build/test.txt")
   plot [cx-5:cx+5][cy-5:cy+5]"../build/test.txt" every ::::i using 2:3 w lp pt 7 ps 1 ti "True Position", \
