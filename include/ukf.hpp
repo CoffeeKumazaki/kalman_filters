@@ -3,10 +3,10 @@
 #include <Eigen/Dense>
 #include <system_model.hpp>
 
-class UnscentedKalmanFilter {
+class UnscentedKF {
 public:
-  UnscentedKalmanFilter(std::shared_ptr<SystemModel> model, const Eigen::MatrixXd& P, double scale = 0.0);
-  ~UnscentedKalmanFilter();
+  UnscentedKF(std::shared_ptr<SystemModel> model, const Eigen::MatrixXd& P, double scale = 0.0);
+  ~UnscentedKF();
 
   void init();
   void init(const Eigen::VectorXd& x);

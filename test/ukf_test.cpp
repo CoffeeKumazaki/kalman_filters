@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
 			 0.0, 1.0, 0.0, 0.0, 
 			 0.0, 0.0, 1.0, 0.0, 
 			 0.0, 0.0, 0.0, 1.0;
-	UnscentedKalmanFilter ukf(model, P, 1.0);
+	UnscentedKF ukf(model, P, 1.0);
 	ukf.init(x0);
 	double t = 0;
 

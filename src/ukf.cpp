@@ -1,7 +1,7 @@
 #include <stdafx.hpp>
 #include <ukf.hpp>
 
-UnscentedKalmanFilter::UnscentedKalmanFilter(
+UnscentedKF::UnscentedKF(
   std::shared_ptr<SystemModel> _model, 
   const Eigen::MatrixXd& _P, 
   double scale /*= 0*/
@@ -25,24 +25,24 @@ UnscentedKalmanFilter::UnscentedKalmanFilter(
   }
 }
 
-UnscentedKalmanFilter::~UnscentedKalmanFilter() {
+UnscentedKF::~UnscentedKF() {
 
 }
 
-void UnscentedKalmanFilter::init() {
+void UnscentedKF::init() {
 
   P = P0;
   x_hat.setZero();
   I = Eigen::MatrixXd::Identity(P.rows(), P.rows());
 }
 
-void UnscentedKalmanFilter::init(const Eigen::VectorXd& x) {
+void UnscentedKF::init(const Eigen::VectorXd& x) {
 
   init();
   x_hat = x;
 }
 
-void UnscentedKalmanFilter::ut(const Eigen::VectorXd& _x, const Eigen::MatrixXd& _P, std::vector<Eigen::VectorXd>& sigmaPt) {
+void UnscentedKF::ut(const Eigen::VectorXd& _x, const Eigen::MatrixXd& _P, std::vector<Eigen::VectorXd>& sigmaPt) {
 
   Eigen::LLT<Eigen::MatrixXd> chol(_P);
   Eigen::MatrixXd L = chol.matrixL();
@@ -59,7 +59,7 @@ void UnscentedKalmanFilter::ut(const Eigen::VectorXd& _x, const Eigen::MatrixXd&
   }
 }
 
-void UnscentedKalmanFilter::predict(const Eigen::VectorXd& u) {
+void UnscentedKF::predict(const Eigen::VectorXd& u) {
 
   std::vector<Eigen::VectorXd> sigmaPt;
   ut(x_hat, P, sigmaPt);
@@ -81,7 +81,7 @@ void UnscentedKalmanFilter::predict(const Eigen::VectorXd& u) {
 
 }
 
-void UnscentedKalmanFilter::update(const Eigen::VectorXd& y) {
+void UnscentedKF::update(const Eigen::VectorXd& y) {
 
   std::vector<Eigen::VectorXd> sigmaPt;
   ut(x_hat, P, sigmaPt);
@@ -109,10 +109,10 @@ void UnscentedKalmanFilter::update(const Eigen::VectorXd& y) {
   P = P - K * P_est.transpose();
 }
 
-Eigen::VectorXd UnscentedKalmanFilter::get_state() { 
+Eigen::VectorXd UnscentedKF::get_state() { 
   return x_hat; 
 }
 
-Eigen::MatrixXd UnscentedKalmanFilter::get_cov() {
+Eigen::MatrixXd UnscentedKF::get_cov() {
   return P;
 }
