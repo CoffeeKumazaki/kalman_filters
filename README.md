@@ -4,4 +4,8 @@
 
 ## Extended Kalman Filter (EKF)
 
-![gif](doc/ekf.gif)
+![ekf_gif](doc/ekf.gif)
+
+## Unscented Kalman Filter (UKF)
+
+![ukf_gif](doc/ukf.gif)
