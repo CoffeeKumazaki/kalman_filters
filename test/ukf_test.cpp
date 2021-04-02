@@ -1,6 +1,6 @@
 #include <stdafx.hpp>
 #include <kalman_filters.hpp>
-#include <ekf.hpp>
+#include <ukf.hpp>
 #include <system_simulator.hpp>
 #include <plot_helper.hpp>
 
@@ -33,8 +33,8 @@ int main(int argc, char const *argv[]) {
 			 0.0, 1.0, 0.0, 0.0, 
 			 0.0, 0.0, 1.0, 0.0, 
 			 0.0, 0.0, 0.0, 1.0;
-	ExtendedKF ekf(model, P);
-	ekf.init(x0);
+	UnscentedKalmanFilter ukf(model, P, 1.0);
+	ukf.init(x0);
 	double t = 0;
 
 	// u: v, yaw
@@ -45,11 +45,11 @@ int main(int argc, char const *argv[]) {
 	std::vector<Ellipse> es;
 	while (t < 60.0) {
 		sim.step(u);
-		ekf.predict(u);
-		ekf.update(sim.obs_results.back());
-		res.push_back(ekf.get_state());
+		ukf.predict(u);
+		ukf.update(sim.obs_results.back());
+		res.push_back(ukf.get_state());
 		Ellipse e;
-		get_covariance_ellipse(ekf.get_cov().block(0, 0, 2, 2), e);
+		get_covariance_ellipse(ukf.get_cov().block(0, 0, 2, 2), e);
 		es.push_back(e);
 		t += dt;
 	}

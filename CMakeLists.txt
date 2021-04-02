@@ -18,6 +18,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 add_library(${PROJECT_NAME}_lib
   src/kalman_filters.cpp
   src/ekf.cpp
+  src/ukf.cpp
   src/system_simulator.cpp
   src/system_model.cpp
 )
@@ -34,3 +35,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
  	include
 )
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_lib)
+
+add_executable(ukf_test 
+  test/ukf_test.cpp
+)
+target_include_directories(ukf_test PUBLIC
+ 	include
+)
+target_link_libraries(ukf_test ${PROJECT_NAME}_lib)
